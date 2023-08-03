@@ -63,7 +63,7 @@ public class CompositepracticeApplication implements CommandLineRunner {
         zooRepository.save(zoo);
 
         LOG.info("\n -- COMPOSITE PRACTICE --");
-
+/*
         LOG.info("\n CREATING STUDENT");
         Studentv1 std1 = new Studentv1();
         std1.setName("Jorge");
@@ -87,8 +87,8 @@ public class CompositepracticeApplication implements CommandLineRunner {
         /*crs1.getStudents().add(std1);
         crs2.getStudents().add(std1);*/
 
-        LOG.info("\n SAVING THE STUDENT (TAKING ADVANTAGE OF CASCADE)");
+        /*LOG.info("\n SAVING THE STUDENT (TAKING ADVANTAGE OF CASCADE)");
         studentv1Repository.save(std1);
-        LOG.info("\n STUDENT SAVED");
+        LOG.info("\n STUDENT SAVED");*/
     }
 }

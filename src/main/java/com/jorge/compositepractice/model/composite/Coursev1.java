@@ -19,7 +19,7 @@ public class Coursev1 {
     private Long id;
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "courses")
+    /*@ManyToMany(cascade = CascadeType.ALL, mappedBy = "courses")
     @JsonBackReference
-    private Set<Studentv1> students = new HashSet<>();
+    private Set<Studentv1> students = new HashSet<>();*/
 }

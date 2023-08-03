@@ -19,12 +19,7 @@ public class Studentv1 {
     private Long id;
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "student_course",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
+    /*@ManyToMany(cascade = CascadeType.ALL)
     @JsonManagedReference
-    private Set<Coursev1> courses = new HashSet<>();
+    private Set<Coursev1> courses = new HashSet<>();*/
 }
