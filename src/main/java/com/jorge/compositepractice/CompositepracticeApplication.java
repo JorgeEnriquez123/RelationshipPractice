@@ -47,13 +47,13 @@ public class CompositepracticeApplication implements CommandLineRunner {
         Bear bear1 = new Bear();
         bear1.setName("Grizz");
         bear1.setSpecies("Grizzly Bear");
-        bear1.setZoo(zoo); //ESTABLISHING THE ASSOCIATION
+        bear1.setZoo(zoo); //ESTABLISHING THE ASSOCIATION - IMPORTANT !!!
 
         LOG.info("\n CREATING BEAR2");
         Bear bear2 = new Bear();
         bear2.setName("Polar");
         bear2.setSpecies("Polar Bear");
-        bear2.setZoo(zoo); //ESTABLISHING THE ASSOCIATION
+        bear2.setZoo(zoo); //ESTABLISHING THE ASSOCIATION - IMPORTANT !!!
 
         LOG.info("\n ADDING BEARS TO THE ZOO");
         List<Bear> bears = Arrays.asList(bear1, bear2);

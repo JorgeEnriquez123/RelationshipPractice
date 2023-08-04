@@ -26,9 +26,7 @@ public class Zoo {
     private String name;
     private String address;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE},
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,
             mappedBy = "zoo")
     @JsonManagedReference
     private List<Bear> bears = new ArrayList<>();

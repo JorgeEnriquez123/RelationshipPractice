@@ -23,8 +23,9 @@ public class Bear {
     private String name;
     private String species;
 
-    //PERSIST will persist the Zoo, and MERGE will update it with the attributes set when creating it
-    //We avoid DELETE so when we delete a Bear, it won't delete the Zoo
+    // * PERSIST will persist the Zoo, and MERGE will update it with the attributes set when creating it
+    // ! We avoid DELETE so when we delete a Bear, it won't delete the Zoo
+    // ? This is just in our use case, since a Bear can leave the zoo, but doesn't mean the Zoo will stop to exist.
     @ManyToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
