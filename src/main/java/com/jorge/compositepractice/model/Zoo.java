@@ -22,11 +22,15 @@ import java.util.List;
 public class Zoo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
     private String address;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "zoo")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE},
+            mappedBy = "zoo")
+    @JsonManagedReference
     private List<Bear> bears = new ArrayList<>();
 
 }

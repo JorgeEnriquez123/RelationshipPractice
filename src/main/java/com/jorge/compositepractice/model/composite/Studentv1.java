@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.util.Lazy;
 
 import java.util.*;
 
@@ -19,7 +20,7 @@ public class Studentv1 {
     private Long id;
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "student_course",
             joinColumns = @JoinColumn(name = "student_id"),

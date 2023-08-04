@@ -62,11 +62,32 @@ public class CompositepracticeApplication implements CommandLineRunner {
         LOG.info("\n SAVING ZOO TO DB");
         zooRepository.save(zoo);
 
+        /*LOG.info("\n TRYING TO SAVE FROM BEAR CREATION");
+        Bear bear3 = new Bear();
+        bear3.setName("Guri");
+        bear3.setSpecies("Grizzly Bear");
+        LOG.info("\n BEAR CREATED");
+
+        LOG.info("\n CREATING ZOO");
+        Zoo zoo2 = new Zoo();
+        zoo2.setName("High Zoo");
+        zoo2.setAddress("Buenvista");
+        LOG.info("\n ZOO CREATED");
+        LOG.info("\n SETTING ZOO");
+        bear3.setZoo(zoo2);
+        LOG.info("\n SAVING BEAR WITH ZOO");
+        bearRepository.save(bear3);*/
+
+
         LOG.info("\n -- COMPOSITE PRACTICE --");
 
         LOG.info("\n CREATING STUDENT");
         Studentv1 std1 = new Studentv1();
         std1.setName("Jorge");
+
+        Studentv1 std2 = new Studentv1();
+        std2.setName("Erick");
+        studentv1Repository.save(std2);
 
         LOG.info("\n CREATING COURSE 1");
         Coursev1 crs1 = new Coursev1();
@@ -84,6 +105,7 @@ public class CompositepracticeApplication implements CommandLineRunner {
 
         //LOG.info("\n SETTING THE STUDENT IN THE COURSES");
         //It is not necessary to set it from the child side
+
         /*crs1.getStudents().add(std1);
         crs2.getStudents().add(std1);*/
 

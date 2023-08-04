@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface BearRepository extends JpaRepository<Bear, Long> {
-    @Query("SELECT DISTINCT b FROM Bear b JOIN FETCH b.zoo")
+    @Query("SELECT DISTINCT b FROM Bear b LEFT JOIN FETCH b.zoo")
     List<Bear> findAllWithZoo();
 }

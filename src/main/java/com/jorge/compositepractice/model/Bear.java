@@ -19,12 +19,18 @@ import org.springframework.data.util.Lazy;
 public class Bear {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
     private String species;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    //PERSIST will persist the Zoo, and MERGE will update it with the attributes set when creating it
+    //We avoid DELETE so when we delete a Bear, it won't delete the Zoo
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+            })
     @JoinColumn(name = "zoo_id")
+    @JsonBackReference
     private Zoo zoo;
 
 }

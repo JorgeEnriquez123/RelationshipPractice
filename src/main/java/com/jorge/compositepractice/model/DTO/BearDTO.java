@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 public class BearDTO {
     private long id;
     private String name;
+    private String species;
     private String zooname;
 }
