@@ -160,6 +160,7 @@ public class Studentv1Controller {
         if(studentFound == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Student with ID: " + id + " not Found");
         }
-        return ResponseEntity.ok().body("Student with ID: " + id + "sucessfully deleted");
+        studentv1Repository.delete(studentFound);
+        return ResponseEntity.ok().body("Student with ID: " + id + " sucessfully deleted");
     }
 }
