@@ -103,14 +103,21 @@ public class CompositepracticeApplication implements CommandLineRunner {
         std1.getCourses().add(crs1);
         std1.getCourses().add(crs2);
 
-        //LOG.info("\n SETTING THE STUDENT IN THE COURSES");
-        //It is not necessary to set it from the child side
+        // * LOG.info("\n SETTING THE STUDENT IN THE COURSES");
+        // ? It is not necessary to set it from the child side
+        // ! IF YOU TRY TO PERSIST THE PARENT SIDE BY PERSISTING THE CHILD SIDE, YOU NEED TO SET
+        // ! THE RELATIONSHIP IN BOTH ENTITES:
+        // ! crs1.getStudents()  +   std1.getCourses()
 
         /*crs1.getStudents().add(std1);
         crs2.getStudents().add(std1);*/
 
         LOG.info("\n SAVING THE STUDENT (TAKING ADVANTAGE OF CASCADE)");
         studentv1Repository.save(std1);
-        LOG.info("\n STUDENT SAVED");
+        LOG.info("\n STUDENT SAVED AND COURSES SAVED");
+
+        // TO TEST IN POSTMAN:
+        // SAVE THE SAME STUDENT WITH THE SAME COURSES
+
     }
 }

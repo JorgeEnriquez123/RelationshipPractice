@@ -20,6 +20,6 @@ public class Coursev1 {
     private String name;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "courses")
-    @JsonBackReference
+    @JsonIgnore // * We are specially using JsonIgnore in ManyToMany to avoid "Unsupported Media Type" if we used JsonBackReference
     private Set<Studentv1> students = new HashSet<>();
 }

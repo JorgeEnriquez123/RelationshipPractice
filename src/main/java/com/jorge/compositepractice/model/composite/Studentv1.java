@@ -26,6 +26,6 @@ public class Studentv1 {
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
-    @JsonManagedReference
+    //@JsonManagedReference - We don't use since we are using JsonIgnore
     private Set<Coursev1> courses = new HashSet<>();
 }
