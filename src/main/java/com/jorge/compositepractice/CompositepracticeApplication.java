@@ -1,6 +1,7 @@
 package com.jorge.compositepractice;
 
 import com.jorge.compositepractice.model.composite.Coursev1;
+import com.jorge.compositepractice.model.composite.StudentCoursePK;
 import com.jorge.compositepractice.model.composite.Student_course;
 import com.jorge.compositepractice.model.composite.Studentv1;
 import com.jorge.compositepractice.repository.*;
@@ -13,6 +14,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 
 @SpringBootApplication
 public class CompositepracticeApplication implements CommandLineRunner {
@@ -39,33 +41,24 @@ public class CompositepracticeApplication implements CommandLineRunner {
         Studentv1 std1 = new Studentv1();
         std1.setName("Jorge");
 
-        //studentv1Repository.save(std1);   //SAVING THEM ALREADY [TEST]
-        // SAVING THEM ALREADY [NO NEEDED THANKS TO CASCADE - IT WILL STILL WORK THO]
-
-        LOG.info("\n CREATING COURSE 1");
-        Coursev1 crs1 = new Coursev1();
-        crs1.setName("Math");
-
-        //coursev1Repository.save(crs1);    //SAVING THEM ALREADY [TEST]
-        // SAVING THEM ALREADY [NO NEEDED THANKS TO CASCADE - IT WILL STILL WORK THO]
+        Studentv1 studentCreated = studentv1Repository.save(std1);   //SAVING THEM ALREADY [TEST]
 
         LOG.info("\n CREATING COURSE 2");
         Coursev1 crs2 = new Coursev1();
         crs2.setName("English");
-        coursev1Repository.save(crs2);;     //SAVING COURSE WITHOUT ENROLLING STUDENT
 
-        LOG.info("\n CREATING STUDENT_COURSE (ONE STUDENT AND ONE COURSE)");
-        Student_course sc = new Student_course();
-        sc.setStudent(std1);
-        sc.setCourse(crs1);
-        sc.setJoinedDate(LocalDate.now());
+        Coursev1 courseCreated = coursev1Repository.save(crs2);;     //SAVING COURSE WITHOUT ENROLLING STUDENT
 
         LOG.info("\n SAVING STUDENT");
-        studentCourseRepository.save(sc); //IT WILL CREATE THE STUDENT AND THE COURSE
+        StudentCoursePK studentCoursePK = new StudentCoursePK(studentCreated.getId(), courseCreated.getId());
 
-        // DELETING STUDENT
-        // studentv1Repository.delete(std1); // YOU CAN'T DUE TO FOREIGN KEY CONSTRAINT
+        Student_course studentCourse = new Student_course();
+        studentCourse.setId(studentCoursePK);
+        studentCourse.setStudent(studentCreated);
+        studentCourse.setCourse(courseCreated);
+        studentCourse.setJoinedDate(LocalDate.now());
 
-        // -------- TAKING ADVANTAGE OF BIDIRECTIONAL APPROACH --------
+        //crs2.getStudentCourses().add(studentCourse);
+        studentCourseRepository.save(studentCourse);
     }
 }

@@ -18,6 +18,7 @@ public class Coursev1 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
     @OneToMany(mappedBy = "course", cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE

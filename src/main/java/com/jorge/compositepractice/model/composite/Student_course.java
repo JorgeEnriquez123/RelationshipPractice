@@ -7,18 +7,17 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@IdClass(StudentCoursePK.class)
 public class Student_course {
-    // * WE USE "PERSIST" TO CREATE ENTITIES OF THE RELATIONSHIP IF THEY ARE NO PRESENT
-    // ? AND "MERGE" TO UPDATE IT WITH THE REST OF ATTRIBUTES GIVEN
-    @Id
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "student_id")
+    @EmbeddedId
+    StudentCoursePK id;
+    @ManyToOne
+    @JoinColumn(name = "studentid")
+    @MapsId("student")
     @JsonManagedReference
     private Studentv1 student;
-    @Id
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "course_id")
+    @ManyToOne
+    @JoinColumn(name = "courseid")
+    @MapsId("course")
     @JsonManagedReference
     private Coursev1 course;
     LocalDate joinedDate;
@@ -26,10 +25,19 @@ public class Student_course {
     public Student_course() {
     }
 
-    public Student_course(Studentv1 student, Coursev1 course, LocalDate joinedDate) {
+    public Student_course(StudentCoursePK id, Studentv1 student, Coursev1 course, LocalDate joinedDate) {
+        this.id = id;
         this.student = student;
         this.course = course;
         this.joinedDate = joinedDate;
+    }
+
+    public StudentCoursePK getId() {
+        return id;
+    }
+
+    public void setId(StudentCoursePK id) {
+        this.id = id;
     }
 
     public Studentv1 getStudent() {

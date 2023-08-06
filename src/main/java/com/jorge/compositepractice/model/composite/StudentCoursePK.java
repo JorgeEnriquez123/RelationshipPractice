@@ -5,31 +5,45 @@ import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Embeddable
 public class StudentCoursePK implements Serializable {
-    Long student;
-    Long course;
+    long studentid;
+    long courseid;
 
     public StudentCoursePK() {
     }
 
-    public StudentCoursePK(Long student, Long course) {
-        this.student = student;
-        this.course = course;
+    public StudentCoursePK(long studentid, long courseid) {
+        this.studentid = studentid;
+        this.courseid = courseid;
     }
 
-    public Long getStudent() {
-        return student;
+    public long getStudentid() {
+        return studentid;
     }
 
-    public void setStudent(Long student) {
-        this.student = student;
+    public void setStudentid(long studentid) {
+        this.studentid = studentid;
     }
 
-    public Long getCourse() {
-        return course;
+    public long getCourseid() {
+        return courseid;
     }
 
-    public void setCourse(Long course) {
-        this.course = course;
+    public void setCourseid(long courseid) {
+        this.courseid = courseid;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StudentCoursePK that = (StudentCoursePK) o;
+        return studentid == that.studentid && courseid == that.courseid;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(studentid, courseid);
     }
 }

@@ -69,8 +69,8 @@ public class Studentv1Controller {
                 Coursev1 courseToAdd = new Coursev1();
                 courseToAdd.setName(crs.getName());
 
-                Student_course stdcrsRelation = new Student_course(stdToAdd, courseToAdd, localDate);
-                stdToAdd.getStudentCourses().add(stdcrsRelation);
+                // * Student_course stdcrsRelation = new Student_course(stdToAdd, courseToAdd, localDate);
+                // *stdToAdd.getStudentCourses().add(stdcrsRelation);
             }
             studentv1Repository.save(stdToAdd);
             return ResponseEntity.ok().body("Student with courses saved successfully");
@@ -107,8 +107,8 @@ public class Studentv1Controller {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("Student with ID: " + studentid + " already enrolled on course ID: " + courseid);
             }
         }
-        Student_course studentCourseRelationToAdd = new Student_course(student, course, LocalDate.now());
-        student.getStudentCourses().add(studentCourseRelationToAdd); // ADDING RELATIONSHIP TO STUDENT
+        // * Student_course studentCourseRelationToAdd = new Student_course(student, course, LocalDate.now());
+        // *student.getStudentCourses().add(studentCourseRelationToAdd); // ADDING RELATIONSHIP TO STUDENT
         studentv1Repository.save(student); // SAVING STUDENT WITH THE RELATIONSHIP
         return ResponseEntity.ok().body("Student with ID: " + studentid + " enrolled in course ID: " + courseid);
     }
