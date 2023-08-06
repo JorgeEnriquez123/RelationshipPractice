@@ -51,22 +51,14 @@ public class Studentv1Controller {
         return ResponseEntity.ok(studentv1Repository.findById(id).orElse(null));
     }
 
-    @GetMapping("/getstudentsfromcourse/{id}")
-    public ResponseEntity<?> getStudentFromCourses(@PathVariable long id) {
-        Coursev1 coursev1 = coursev1Repository.findById(id).orElse(null);
-        Set<Student_course> studentCourses = coursev1.getStudentCourses();
-
-        return ResponseEntity.ok().body(studentCourses);
-    }
-
     @Transactional
     @PostMapping
-    public ResponseEntity<?> add(@RequestBody Studentv1 stdnt) {
+    public ResponseEntity<?> add(@RequestBody Studentv1 stdnt) {  // * SAVE - FOR @ManyToMany
         return ResponseEntity.ok().body(studentv1Repository.save(stdnt));
     }
 
     @Transactional
-    @PostMapping("/idclassver") // * SAVE - ESPECIALLY FOR IDCLASS VERSION
+    @PostMapping("/idclassver") // * SAVE - ESPECIALLY FOR IdClass VERSION
     public ResponseEntity<?> addWithCourses(@RequestBody StudentRequest stdnt) {
         LocalDate localDate = LocalDate.now();
         Studentv1 stdToAdd = new Studentv1();
@@ -94,7 +86,6 @@ public class Studentv1Controller {
         Studentv1 student = studentv1Repository.findById(studentid).orElse(null);
         Coursev1 course = coursev1Repository.findById(courseid).orElse(null);
 
-        LOG.info("STUDENT AND COURSE FOUND");
         if (student == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Student with ID: " + studentid + " doesn't exist");
         }
@@ -106,10 +97,6 @@ public class Studentv1Controller {
         LOG.info("GETTING RELATION OF STUDENTS FROM THE COURSE");
 
         if (!studentsFromCourse.isEmpty()) {
-            LOG.info("THERE ARE RELATIONSHIPS");
-            int size = studentsFromCourse.size();
-            LOG.info("CHECKING " + size + " RELATIONSHIPS");
-
             boolean studentIsEnrolled = studentsFromCourse.stream()
                     .filter(stdCrsRelation -> stdCrsRelation.getStudent() == student)
                     .map(Student_course::getCourse)
@@ -120,10 +107,9 @@ public class Studentv1Controller {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("Student with ID: " + studentid + " already enrolled on course ID: " + courseid);
             }
         }
-        LOG.info("FINISHED SEARCHING");
         Student_course studentCourseRelationToAdd = new Student_course(student, course, LocalDate.now());
-        student.getStudentCourses().add(studentCourseRelationToAdd);
-        studentv1Repository.save(student);
+        student.getStudentCourses().add(studentCourseRelationToAdd); // ADDING RELATIONSHIP TO STUDENT
+        studentv1Repository.save(student); // SAVING STUDENT WITH THE RELATIONSHIP
         return ResponseEntity.ok().body("Student with ID: " + studentid + " enrolled in course ID: " + courseid);
     }
 
@@ -134,7 +120,6 @@ public class Studentv1Controller {
         Studentv1 student = studentv1Repository.findById(studentid).orElse(null);
         Coursev1 course = coursev1Repository.findById(courseid).orElse(null);
 
-        LOG.info("STUDENT AND COURSE FOUND");
         if (student == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Student with ID: " + studentid + " doesn't exist");
         }
@@ -146,10 +131,6 @@ public class Studentv1Controller {
         LOG.info("GETTING RELATION OF STUDENTS FROM THE COURSE");
 
         if (!coursesFromStudent.isEmpty()) {
-            LOG.info("THERE ARE RELATIONSHIPS");
-            int size = coursesFromStudent.size();
-            LOG.info("CHECKING " + size + " RELATIONSHIPS");
-
             boolean studentIsEnrolled = coursesFromStudent.stream()
                     .filter(stdCrsRelation -> stdCrsRelation.getStudent() == student)
                     .map(Student_course::getCourse)
@@ -159,17 +140,16 @@ public class Studentv1Controller {
                 LOG.info("STUDENT ENROLLED");
                 StudentCoursePK studentCoursePK = new StudentCoursePK(student.getId(), course.getId());
                 Student_course studentCourse = studentCourseRepository.findById(studentCoursePK).get();
-                studentCourseRepository.deleteById(studentCoursePK);
-                student.getStudentCourses().remove(studentCourse);
+                studentCourseRepository.deleteById(studentCoursePK); //REMOVE RELATIONSHIP FROM COMPOSITE TABLE
+                student.getStudentCourses().remove(studentCourse); //REMOVE RELATIONSHIP FROM BASE ENTITY
                 course.getStudentCourses().remove(studentCourse);
-                studentv1Repository.save(student);
+                studentv1Repository.save(student);  //SAVING WITH UPDATED RELATIONSHIP
                 return ResponseEntity.ok().body("Student with ID: " + studentid + " removed from Course ID: " + courseid);
             }
             else {
                 return ResponseEntity.ok().body("Student with ID: " + studentid + " is not enrolled in course ID: " + courseid);
             }
         }
-        LOG.info("FINISHED SEARCHING");
         return ResponseEntity.ok().body("Student with ID: " + studentid + " doesn't have any courses");
     }
 
