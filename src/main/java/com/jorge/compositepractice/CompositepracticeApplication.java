@@ -41,16 +41,17 @@ public class CompositepracticeApplication implements CommandLineRunner {
         Studentv1 std1 = new Studentv1();
         std1.setName("Jorge");
 
-        Studentv1 studentCreated = studentv1Repository.save(std1);   //SAVING THEM ALREADY [TEST]
+        Studentv1 studentCreated = studentv1Repository.save(std1);   // * SAVING THEM INDIVIDUALLY
 
         LOG.info("\n CREATING COURSE 2");
         Coursev1 crs2 = new Coursev1();
         crs2.setName("English");
 
-        Coursev1 courseCreated = coursev1Repository.save(crs2);;     //SAVING COURSE WITHOUT ENROLLING STUDENT
+        Coursev1 courseCreated = coursev1Repository.save(crs2);;     // * SAVING THEM INDIVIDUALLY
 
         LOG.info("\n SAVING STUDENT");
         StudentCoursePK studentCoursePK = new StudentCoursePK(studentCreated.getId(), courseCreated.getId());
+        // * SETTING THE PK CLASS
 
         Student_course studentCourse = new Student_course();
         studentCourse.setId(studentCoursePK);
@@ -58,7 +59,6 @@ public class CompositepracticeApplication implements CommandLineRunner {
         studentCourse.setCourse(courseCreated);
         studentCourse.setJoinedDate(LocalDate.now());
 
-        //crs2.getStudentCourses().add(studentCourse);
-        studentCourseRepository.save(studentCourse);
+        studentCourseRepository.save(studentCourse); // * SAVING IT INDIVIDUALLY
     }
 }
