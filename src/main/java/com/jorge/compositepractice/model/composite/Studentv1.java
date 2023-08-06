@@ -19,7 +19,28 @@ public class Studentv1 {
     private Long id;
     private String name;
 
-    /*@ManyToMany(cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private Set<Coursev1> courses = new HashSet<>();*/
+    @OneToMany(mappedBy = "student", cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JsonBackReference
+    private Set<Student_course> studentCourses = new HashSet<>();
+    // * THIS MAKE THE RELATION PERSISTING EASIER
+    // ? INSTEAD OF PERSISTING THE STUDDENT_COURSE INDIVUDALLY...
+    // * WE SET A LIST OF: -STUDENT- + -COURSE ASSIGNED-
+    // ! EXAMPLE:
+    // Student_Course studentCourse1 = new StudentCourse(student1, course1, localdate);
+    // Student_Course studentCourse2 = new StudentCourse(student1, course2, localdate);
+    // student.getStudentCourses.add(studentCourse1)
+    // student.getStudentCourses.add(studentCourse2)
+
+
+    @Override
+    public String toString() {
+        return "Studentv1{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", studentCourses=" + studentCourses +
+                '}';
+    }
 }

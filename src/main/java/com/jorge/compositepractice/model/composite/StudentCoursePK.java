@@ -1,51 +1,35 @@
 package com.jorge.compositepractice.model.composite;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-@Embeddable
-public class StudentCoursePK {
-    @Column(name = "student_id")
-    Long studentid;
-    @Column(name = "course_id")
-    Long courseid;
+public class StudentCoursePK implements Serializable {
+    Long student;
+    Long course;
 
     public StudentCoursePK() {
     }
 
-    public StudentCoursePK(Long studentid, Long courseid) {
-        this.studentid = studentid;
-        this.courseid = courseid;
+    public StudentCoursePK(Long student, Long course) {
+        this.student = student;
+        this.course = course;
     }
 
-    public Long getStudentid() {
-        return studentid;
+    public Long getStudent() {
+        return student;
     }
 
-    public void setStudentid(Long studentid) {
-        this.studentid = studentid;
+    public void setStudent(Long student) {
+        this.student = student;
     }
 
-    public Long getCourseid() {
-        return courseid;
+    public Long getCourse() {
+        return course;
     }
 
-    public void setCourseid(Long courseid) {
-        this.courseid = courseid;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StudentCoursePK that = (StudentCoursePK) o;
-        return Objects.equals(studentid, that.studentid) && Objects.equals(courseid, that.courseid);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(studentid, courseid);
+    public void setCourse(Long course) {
+        this.course = course;
     }
 }

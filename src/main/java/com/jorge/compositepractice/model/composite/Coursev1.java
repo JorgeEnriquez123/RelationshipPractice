@@ -18,8 +18,19 @@ public class Coursev1 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-
-    /*@ManyToMany(cascade = CascadeType.ALL, mappedBy = "courses")
+    @OneToMany(mappedBy = "course", cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JsonBackReference
-    private Set<Studentv1> students = new HashSet<>();*/
+    private Set<Student_course> studentCourses = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "Coursev1{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", studentCourses=" + studentCourses +
+                '}';
+    }
 }

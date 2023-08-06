@@ -7,6 +7,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface Coursev1Repository extends JpaRepository<Coursev1, Long> {
-    /*@Query("SELECT DISTINCT z FROM Zoo z JOIN FETCH z.bears")
-    List<Zoo> findAllWithBears();*/
 }
