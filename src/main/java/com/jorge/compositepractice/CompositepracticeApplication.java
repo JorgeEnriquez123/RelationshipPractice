@@ -62,6 +62,7 @@ public class CompositepracticeApplication implements CommandLineRunner {
         studentCourseRepository.save(studentCourse);    // * PERSISTING ALONG WITH STUDENT AND COURSE
 
         // ! MY MISTAKE - WHY DIDN'T EMBEDDEDID WORK FOR PERSISTING CHILD ENTITES ALONG WITH A PARENT ENTITY (COMPOSITE ONE):
+        // - HAD 'long' instead of 'Long' on StudentCoursePK Ids, which won't let us store a null for ID (From an non-persisted Entity)
         // - FORGOT TO ADD CASCADE PERSIST AND MERGE
         // - WRONG NAME IN @MAPSID
 
