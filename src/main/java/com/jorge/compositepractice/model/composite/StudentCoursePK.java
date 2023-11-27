@@ -7,39 +7,38 @@ import java.util.Objects;
 
 @Embeddable
 public class StudentCoursePK implements Serializable {
-    long studentid;
-    long courseid;
+    Long studentid;
+    Long courseid;
 
     public StudentCoursePK() {
     }
 
-    public StudentCoursePK(long studentid, long courseid) {
+    public StudentCoursePK(Long studentid, Long courseid) {
         this.studentid = studentid;
         this.courseid = courseid;
     }
 
-    public long getStudentid() {
+    public Long getStudentid() {
         return studentid;
     }
 
-    public void setStudentid(long studentid) {
+    public void setStudentid(Long studentid) {
         this.studentid = studentid;
     }
 
-    public long getCourseid() {
+    public Long getCourseid() {
         return courseid;
     }
 
-    public void setCourseid(long courseid) {
+    public void setCourseid(Long courseid) {
         this.courseid = courseid;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StudentCoursePK that = (StudentCoursePK) o;
-        return studentid == that.studentid && courseid == that.courseid;
+        if (!(o instanceof StudentCoursePK that)) return false;
+        return Objects.equals(studentid, that.studentid) && Objects.equals(courseid, that.courseid);
     }
 
     @Override

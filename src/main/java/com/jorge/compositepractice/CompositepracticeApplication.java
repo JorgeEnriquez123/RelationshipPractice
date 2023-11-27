@@ -41,24 +41,29 @@ public class CompositepracticeApplication implements CommandLineRunner {
         Studentv1 std1 = new Studentv1();
         std1.setName("Jorge");
 
-        Studentv1 studentCreated = studentv1Repository.save(std1);   // * SAVING THEM INDIVIDUALLY
-
+        //Studentv1 studentCreated = studentv1Repository.save(std1);   // * SAVING THEM INDIVIDUALLY
+                                                                       // NORMALLY, YOU WOULD ASSOCIATE AND EXISTING STUDENT WITH A COURSE
         LOG.info("\n CREATING COURSE 2");
         Coursev1 crs2 = new Coursev1();
         crs2.setName("English");
 
-        Coursev1 courseCreated = coursev1Repository.save(crs2);;     // * SAVING THEM INDIVIDUALLY
-
-        LOG.info("\n SAVING STUDENT");
-        StudentCoursePK studentCoursePK = new StudentCoursePK(studentCreated.getId(), courseCreated.getId());
-        // * SETTING THE PK CLASS
+        //Coursev1 courseCreated = coursev1Repository.save(crs2);;     // * SAVING THEM INDIVIDUALLY
+                                                                       // NORMALLY, YOU WOULD ASSOCIATE AND EXISTING COURSE WITH A STUDENT
+        //LOG.info("\n SAVING STUDENT");
+        StudentCoursePK studentCoursePK = new StudentCoursePK(std1.getId(), crs2.getId());
+        // SETTING THE PK CLASS
 
         Student_course studentCourse = new Student_course();
+        studentCourse.setStudent(std1);
+        studentCourse.setCourse(crs2);
         studentCourse.setId(studentCoursePK);
-        studentCourse.setStudent(studentCreated);
-        studentCourse.setCourse(courseCreated);
         studentCourse.setJoinedDate(LocalDate.now());
 
-        studentCourseRepository.save(studentCourse); // * SAVING IT INDIVIDUALLY
+        studentCourseRepository.save(studentCourse);    // * PERSISTING ALONG WITH STUDENT AND COURSE
+
+        // ! MY MISTAKE - WHY DIDN'T EMBEDDEDID WORK FOR PERSISTING CHILD ENTITES ALONG WITH A PARENT ENTITY (COMPOSITE ONE):
+        // - FORGOT TO ADD CASCADE PERSIST AND MERGE
+        // - WRONG NAME IN @MAPSID
+
     }
 }

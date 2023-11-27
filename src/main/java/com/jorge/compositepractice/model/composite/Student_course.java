@@ -10,14 +10,14 @@ import java.time.LocalDate;
 public class Student_course {
     @EmbeddedId
     StudentCoursePK id;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "studentid")
-    @MapsId("student")
+    @MapsId("studentid") //MapsId should have the same name as in StudentCoursePK attributes
     @JsonManagedReference
     private Studentv1 student;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "courseid")
-    @MapsId("course")
+    @MapsId("courseid")
     @JsonManagedReference
     private Coursev1 course;
     LocalDate joinedDate;
